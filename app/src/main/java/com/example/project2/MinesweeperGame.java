@@ -35,39 +35,33 @@ public class MinesweeperGame {
             }
         }
     }
-
     // Randomly place mines
     private void placeMines() {
         int minesPlaced = 0;
         Random random = new Random();
-
         while (minesPlaced < totalMines) {
-            int row = random.nextInt(rows);
-            int col = random.nextInt(columns);
-
+            int row = random.nextInt(rows); //randInt between 0 - (rows -1)
+            int col = random.nextInt(columns); //randInt between 0 - (cols -1)
             if (!board[row][col].isMine()) {
                 board[row][col].setMine(true);
                 minesPlaced++;
             }
         }
     }
-
     // Calculate adjacent mines for all cells
     private void calculateAdjacentMines() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (!board[i][j].isMine()) {
                     int count = countAdjacentMines(i, j);
-                    board[i][j].setAdjacentMines(count);
+                    board[i][j].setAdjacentMines(count); // Sets the variable inside Cell class to track the number of adjacent mines
                 }
             }
         }
     }
-
     // Count mines around a specific cell
     private int countAdjacentMines(int row, int col) {
         int count = 0;
-
         // Check all 8 surrounding cells
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -87,89 +81,76 @@ public class MinesweeperGame {
         }
         return count;
     }
-
-    // Check if cell coordinates are valid
+    // Check if cell coordinates are within the board
     private boolean isValidCell(int row, int col) {
-        return row >= 0 && row < rows && col >= 0 && col < columns;
+        if (row >= 0 && row < rows && col >= 0 && col < columns){
+            return true;
+        }
+        return false;
     }
-
-    // Reveal a cell (called by Controller when user taps)
+    // Reveals the cell that is clicked and if the cell has no adjacent mines then it reveals all adjacent cells too (Called by controller)
     public boolean revealCell(int row, int col) {
-        if (gameOver || !isValidCell(row, col)) {
+        if (gameOver || !isValidCell(row, col)) { // Can't reveal if game is over or invalid cell
             return false;
         }
 
         Cell cell = board[row][col];
 
-        // Can't reveal flagged cells
-        if (cell.isFlagged() || cell.isRevealed()) {
+        if (cell.isFlagged() || cell.isRevealed()) {// Can't reveal flagged or already revealed cells
             return false;
         }
 
-        cell.setRevealed(true);
+        cell.setRevealed(true); // reveal this cell
 
-        // Hit a mine - game over!
-        if (cell.isMine()) {
+        if (cell.isMine()) { // If a mine is hit Game over
             gameOver = true;
             return true; // Return true = hit mine
         }
 
-        // If cell has 0 adjacent mines, reveal surrounding cells
-        if (cell.getAdjacentMines() == 0) {
+        if (cell.getAdjacentMines() == 0) {// If cell has 0 adjacent mines, reveal surrounding cells
             revealAdjacentCells(row, col);
         }
-
-        // Check if player won
-        checkWinCondition();
-
+        checkWinCondition(); // Check if player won
         return false; // Return false = safe cell
     }
-
-    // Recursively reveal adjacent cells (for 0-mine cells)
+    // Function that cascades and reveals all surrounding cells
     private void revealAdjacentCells(int row, int col) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 int newRow = row + i;
                 int newCol = col + j;
-
-                if (i == 0 && j == 0) continue;
-
+                if (i == 0 && j == 0) continue; // We already know this ones not a mine
                 if (isValidCell(newRow, newCol)) {
                     Cell adjacentCell = board[newRow][newCol];
-                    if (!adjacentCell.isRevealed() && !adjacentCell.isFlagged()) {
-                        revealCell(newRow, newCol); // Recursive call
+                    if (!adjacentCell.isRevealed() && !adjacentCell.isFlagged()) { // if the cell is not already revealed and not flagged
+                        revealCell(newRow, newCol); // reveal the cell
                     }
                 }
             }
         }
     }
-
-    // Toggle flag on a cell (called by Controller on long-press)
+    // Toggles flag off/on
     public void toggleFlag(int row, int col) {
         if (gameOver || !isValidCell(row, col)) {
             return;
         }
-
         Cell cell = board[row][col];
-
         if (cell.isRevealed()) {
             return; // Can't flag revealed cells
         }
-
-        if (cell.isFlagged()) {
+        if (cell.isFlagged()) { // if the cell is flagged unflag it
             cell.setFlagged(false);
             flagsPlaced--;
-        } else {
+        }
+        else { // If cell is not flagged flag it
             cell.setFlagged(true);
             flagsPlaced++;
         }
     }
-
-    // Check if player has won
+    // Linearly checks all squares to check if the player has won yet
     private void checkWinCondition() {
         int revealedCount = 0;
         int totalNonMines = (rows * columns) - totalMines;
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (board[i][j].isRevealed() && !board[i][j].isMine()) {
@@ -177,28 +158,36 @@ public class MinesweeperGame {
                 }
             }
         }
-
         if (revealedCount == totalNonMines) {
             gameWon = true;
             gameOver = true;
         }
     }
-
-    // Calculate total mines based on percentage
+    // Calculate total mines based on the percentage set by user
     private int calculateTotalMines(int rows, int cols, int percentage) {
         int totalCells = rows * cols;
         return (int) Math.ceil(totalCells * percentage / 100.0);
     }
-
-    // Getters for Controller to use
+    // Getters
     public Cell getCell(int row, int col) {
         return board[row][col];
     }
-
-    public int getRows() { return rows; }
-    public int getColumns() { return columns; }
-    public int getTotalMines() { return totalMines; }
-    public int getRemainingMines() { return totalMines - flagsPlaced; }
-    public boolean isGameOver() { return gameOver; }
-    public boolean isGameWon() { return gameWon; }
+    public int getRows() {
+        return rows;
+    }
+    public int getColumns() {
+        return columns;
+    }
+    public int getTotalMines() {
+        return totalMines;
+    }
+    public int getRemainingMines() {
+        return totalMines - flagsPlaced;
+    }
+    public boolean isGameOver() {
+        return gameOver;
+    }
+    public boolean isGameWon() {
+        return gameWon;
+    }
 }
