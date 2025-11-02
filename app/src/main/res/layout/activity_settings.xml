@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#003049">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,12 +19,12 @@
             android:text="Game Settings"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#2C3E50"
+            android:textColor="#dad7cd"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"/>
 
-        <!-- Board Size Card -->
+        <!-- Board Size -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBoardSize"
             android:layout_width="0dp"
@@ -34,7 +34,8 @@
             app:layout_constraintTop_toBottomOf="@id/txtSettingsTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="#dad7cd">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                     android:textColor="#34495E"
                     android:layout_marginBottom="16dp"/>
 
-                <!-- Rows Selection -->
+                <!-- Rows  -->
                 <TextView
                     android:id="@+id/txtRowsLabel"
                     android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
                     android:layout_marginBottom="16dp"
                     android:background="@android:drawable/btn_dropdown"/>
 
-                <!-- Columns Selection -->
+                <!-- Columns  -->
                 <TextView
                     android:id="@+id/txtColumnsLabel"
                     android:layout_width="wrap_content"
@@ -89,7 +90,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Mine Percentage Card -->
+        <!-- Mine Percentage -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardMinePercentage"
             android:layout_width="0dp"
@@ -99,7 +100,8 @@
             app:layout_constraintTop_toBottomOf="@id/cardBoardSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#dad7cd">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,7 +138,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Color Settings Card -->
+        <!-- Color -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardColorSettings"
             android:layout_width="0dp"
@@ -146,7 +148,8 @@
             app:layout_constraintTop_toBottomOf="@id/cardMinePercentage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#dad7cd">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,7 +167,7 @@
                     android:textColor="#34495E"
                     android:layout_marginBottom="16dp"/>
 
-                <!-- Covered Cell Color -->
+                <!-- Covered  -->
                 <TextView
                     android:id="@+id/txtCoveredCellLabel"
                     android:layout_width="wrap_content"
@@ -181,7 +184,7 @@
                     android:layout_marginBottom="12dp"
                     android:background="@android:drawable/btn_dropdown"/>
 
-                <!-- Uncovered Cell Color -->
+                <!-- Uncovered  -->
                 <TextView
                     android:id="@+id/txtUncoveredCellLabel"
                     android:layout_width="wrap_content"
@@ -198,7 +201,7 @@
                     android:layout_marginBottom="12dp"
                     android:background="@android:drawable/btn_dropdown"/>
 
-                <!-- Suspected/Flag Cell Color -->
+                <!-- Flag color -->
                 <TextView
                     android:id="@+id/txtSuspectedCellLabel"
                     android:layout_width="wrap_content"
@@ -235,7 +238,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Action Buttons -->
+        <!-- Buttons -->
         <Button
             android:id="@+id/btnSaveSettings"
             android:layout_width="0dp"

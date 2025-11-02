@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#003049">
 
-    <!-- Top Info Bar -->
+    <!-- Top bar -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardInfoBar"
         android:layout_width="0dp"
@@ -21,8 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical">
+            android:padding="50dp"
+            android:gravity="center_vertical"
+            android:background="#003049">
 
             <!-- Mine Counter -->
             <LinearLayout
@@ -93,7 +94,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Game Board Container (ScrollView for larger boards) -->
+    <!-- Game Board -->
     <ScrollView
         android:id="@+id/scrollViewVertical"
         android:layout_width="0dp"
@@ -111,7 +112,7 @@
             android:layout_height="wrap_content"
             android:fillViewport="true">
 
-            <!-- GridLayout will be populated programmatically -->
+            <!-- GridLayout -->
             <GridLayout
                 android:id="@+id/gridGameBoard"
                 android:layout_width="wrap_content"
@@ -126,7 +127,7 @@
 
     </ScrollView>
 
-    <!-- Bottom Button -->
+    <!-- Back to menu -->
     <Button
         android:id="@+id/btnBackToMenu"
         android:layout_width="0dp"
@@ -134,7 +135,7 @@
         android:text="BACK TO MENU"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:backgroundTint="#95A5A6"
+        android:backgroundTint="#dad7cd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

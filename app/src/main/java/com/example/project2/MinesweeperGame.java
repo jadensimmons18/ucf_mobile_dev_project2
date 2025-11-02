@@ -12,7 +12,7 @@ public class MinesweeperGame {
     private boolean gameOver;
     private boolean gameWon;
 
-    // Constructor - creates the game
+    // Constructor
     public MinesweeperGame(int rows, int columns, int minePercentage) {
         this.rows = rows;
         this.columns = columns;

@@ -59,7 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
             int columns = Integer.parseInt(spinnerColumns.getSelectedItem().toString());
             int minePercent = Integer.parseInt(spinnerMinePercent.getSelectedItem().toString());
 
-            // Simple validation
             if (rows < 2 || columns < 2) {
                 Toast.makeText(this, "Board must be at least 2x2", Toast.LENGTH_SHORT).show();
                 return;
@@ -88,14 +87,12 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Back to menu: just finish this Activity and return
+        // Listener
         btnBackToMenu.setOnClickListener(v -> finish());
     }
 
-    // Sets up row/column spinner options (example: 5..15; you can adjust)
     private void setupBoardSizeSpinners() {
         List<String> sizeOptions = new ArrayList<>();
-        // common board sizes: 5..15
         for (int i = 5; i <= 15; i++) {
             sizeOptions.add(String.valueOf(i));
         }
@@ -107,12 +104,11 @@ public class SettingsActivity extends AppCompatActivity {
         spinnerRows.setAdapter(adapter);
         spinnerColumns.setAdapter(adapter);
 
-        // set reasonable defaults (matching MainActivity earlier)
         spinnerRows.setSelection(sizeOptions.indexOf("5"));
         spinnerColumns.setSelection(sizeOptions.indexOf("5"));
     }
 
-    // Sets up mine percent spinner (example: 5%, 10%, 15%, 20%, ...)
+    // Sets up mine percent spinner
     private void setupMinePercentSpinner() {
         List<String> percents = new ArrayList<>();
         int[] common = {5, 10, 15, 20, 25, 30};
@@ -125,7 +121,6 @@ public class SettingsActivity extends AppCompatActivity {
         spinnerMinePercent.setSelection(percents.indexOf("10")); // default 10%
     }
 
-    // Color spinner setup: use readable names and map them to Color ints in colorNameToInt()
     private void setupColorSpinners() {
         List<String> colorNames = new ArrayList<>();
         colorNames.add("GRAY");
@@ -136,7 +131,6 @@ public class SettingsActivity extends AppCompatActivity {
         colorNames.add("GREEN");
         colorNames.add("BLACK");
         colorNames.add("LIGHT_GRAY");
-        // add or remove color names to fit your design
 
         ArrayAdapter<String> colorAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, colorNames);
@@ -147,14 +141,12 @@ public class SettingsActivity extends AppCompatActivity {
         spinnerSuspectedColor.setAdapter(colorAdapter);
         spinnerMineColor.setAdapter(colorAdapter);
 
-        // set defaults to match MainActivity defaults
         spinnerCoveredColor.setSelection(colorNames.indexOf("GRAY"));
         spinnerUncoveredColor.setSelection(colorNames.indexOf("WHITE"));
         spinnerSuspectedColor.setSelection(colorNames.indexOf("YELLOW"));
         spinnerMineColor.setSelection(colorNames.indexOf("RED"));
     }
 
-    // Map color name strings to Android color ints
     private int colorNameToInt(String name) {
         switch (name) {
             case "WHITE":
@@ -162,7 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
             case "GRAY":
                 return Color.GRAY;
             case "LIGHT_GRAY":
-                return 0xFFD3D3D3; // light gray hex
+                return 0xFFD3D3D3;
             case "YELLOW":
                 return Color.YELLOW;
             case "RED":
@@ -174,7 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
             case "BLACK":
                 return Color.BLACK;
             default:
-                return Color.GRAY; // fallback
+                return Color.GRAY;
         }
     }
 }

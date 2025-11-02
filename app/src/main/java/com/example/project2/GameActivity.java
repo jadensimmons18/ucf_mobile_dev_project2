@@ -21,11 +21,10 @@ public class GameActivity extends AppCompatActivity {
     private int suspectedColor;
     private int mineColor;
 
-    // Game components
     private MinesweeperGame game;
     private Button[][] cellButtons;
 
-    // UI components
+    // UI
     private GridLayout gridGameBoard;
     private TextView txtMineCounter;
     private TextView txtTimer;
@@ -52,14 +51,14 @@ public class GameActivity extends AppCompatActivity {
         suspectedColor = getIntent().getIntExtra(SettingsActivity.EXTRA_SUSPECTED_COLOR, Color.YELLOW);
         mineColor = getIntent().getIntExtra(SettingsActivity.EXTRA_MINE_COLOR, Color.RED);
 
-        // Find UI components
+        // Find views
         gridGameBoard = findViewById(R.id.gridGameBoard);
         txtMineCounter = findViewById(R.id.txtMineCounter);
         txtTimer = findViewById(R.id.txtTimer);
         btnReset = findViewById(R.id.btnReset);
         btnBackToMenu = findViewById(R.id.btnBackToMenu);
 
-        // Set up button listeners
+        // listeners
         btnReset.setOnClickListener(v -> resetGame());
         btnBackToMenu.setOnClickListener(v -> finish());
 
@@ -71,10 +70,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initializeGame() {
-        // Create the game model
         game = new MinesweeperGame(rows, columns, minePercent);
 
-        // Update mine counter
         updateMineCounter();
 
         // Reset timer
@@ -82,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
         timerRunning = false;
         updateTimerDisplay();
 
-        // Create the visual game board
+        // Create the game board
         createGameBoard();
     }
 
@@ -90,20 +87,20 @@ public class GameActivity extends AppCompatActivity {
         // Clear any existing views
         gridGameBoard.removeAllViews();
 
-        // Configure the GridLayout
+        // create the grid
         gridGameBoard.setRowCount(rows);
         gridGameBoard.setColumnCount(columns);
 
         // Calculate cell size based on screen width
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        int padding = 32; // Account for padding
+        int padding = 32;
         int cellSize = (screenWidth - padding) / columns;
 
         // Make sure cells aren't too small or too large
         if (cellSize > 150) cellSize = 150;
         if (cellSize < 60) cellSize = 60;
 
-        // Create array to store button references
+        // Create array to store buttons
         cellButtons = new Button[rows][columns];
 
         // Create a button for each cell
@@ -115,7 +112,6 @@ public class GameActivity extends AppCompatActivity {
                 // Create button
                 Button cellButton = new Button(this);
 
-                // Set layout parameters
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                 params.width = cellSize;
                 params.height = cellSize;
@@ -130,7 +126,7 @@ public class GameActivity extends AppCompatActivity {
                 cellButton.setGravity(Gravity.CENTER);
                 cellButton.setPadding(0, 0, 0, 0);
 
-                // Normal tap - reveal cell
+                // reveal cell
                 cellButton.setOnClickListener(v -> {
                     // Start timer on first click
                     if (!timerRunning && !game.isGameOver()) {
@@ -139,9 +135,9 @@ public class GameActivity extends AppCompatActivity {
                     onCellClick(row, col);
                 });
 
-                // Long tap - flag cell
+                // flag cell
                 cellButton.setOnLongClickListener(v -> {
-                    // Start timer on first interaction
+                    // Start timer on first click
                     if (!timerRunning && !game.isGameOver()) {
                         startTimer();
                     }
@@ -152,7 +148,6 @@ public class GameActivity extends AppCompatActivity {
                 // Add button to grid
                 gridGameBoard.addView(cellButton);
 
-                // Store reference
                 cellButtons[row][col] = cellButton;
             }
         }
@@ -167,10 +162,10 @@ public class GameActivity extends AppCompatActivity {
         // Try to reveal the cell
         boolean hitMine = game.revealCell(row, col);
 
-        // Update all cells (in case of cascade)
+        // Update all cells
         updateAllCells();
 
-        // Check if hit a mine
+        // Check if mine was hit
         if (hitMine) {
             stopTimer();
             revealAllMines();
@@ -192,7 +187,7 @@ public class GameActivity extends AppCompatActivity {
         // Toggle flag
         game.toggleFlag(row, col);
 
-        // Update this cell's appearance
+        // Update cell
         updateCellView(row, col);
 
         // Update mine counter
@@ -282,13 +277,12 @@ public class GameActivity extends AppCompatActivity {
         // Stop timer
         stopTimer();
 
-        // Reinitialize everything
+        // reset everything
         initializeGame();
 
         Toast.makeText(this, "Game reset!", Toast.LENGTH_SHORT).show();
     }
 
-    // Timer methods
     private void setupTimer() {
         timerHandler = new Handler(); //todo fix
         timerRunnable = new Runnable() {
